@@ -1,15 +1,13 @@
 ---
 title: "Laboratorio3"
-<<<<<<< HEAD
 author: "Grupo2"
 date: "2023-11-22"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-=======
-output: html_document
-date: "2023-11-22"
----
+======= output: html_document date: "2023-11-22" ---
 
 ## R Markdown
 
@@ -39,11 +37,9 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 
 ```
 
+##Análisis de logs de servidor usando R (parte II) \####################################################
 
-##Análisis de logs de servidor usando R (parte II)
-####################################################
-
-# 1.Descomprimir el fichero comprimido que contiene los registros del servidor, y a partir de los datos extraídos, cargar en data frame los registros con las peticiones servidas. 
+# 1.Descomprimir el fichero comprimido que contiene los registros del servidor, y a partir de los datos extraídos, cargar en data frame los registros con las peticiones servidas.
 
 ```{r Load_Table, message=FALSE, warning=FALSE, include=FALSE}
 epa_http <- read_table("https://raw.githubusercontent.com/CarlosAranaO/Laboratorio3/main/epa-http.csv", col_names = c("IP" ,"TIME_STAMP","TYPE" , "URL" ,"PROTOCOL" ,"RESPONSE_CODE" ,"BYTES"), col_types = cols(BYTES = col_number()));
@@ -118,16 +114,39 @@ kable(HTTP_TYPE2[1:3,], caption="Tipos de Peticiones HTTP para Imagenes")
 
 # 5.Generar un gráfico que permita visualizar el número de peticiones servidas a lo largo del tiempo.
 
-```{r pregunta5, message=FALSE, warning=FALSE}
+```{r pregunta5, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot2::ggplot(data=epa_http)+ geom_histogram(aes(x = TIME_STAMP),binwidth= 500, col='black', fill='green', alpha=0.4)+ ggtitle('Peticiones a lo Largo del Tiempo')
 ```
 
 #### Clústering de datos
 
-# 6.Utilizando un algoritmo de aprendizaje no supervisado, realizad un análisis de clústering con k-means para los datos del servidor. 
+# 6.Utilizando un algoritmo de aprendizaje no supervisado, realizad un análisis de clústering con k-means para los datos del servidor.
 
 ```{r pregunta6}
+df$TYPE <- as.factor(df$TYPE)
+df$PROTOCOL <- as.factor(df$PROTOCOL)
+df$RESPONSE_CODE <- as.factor(df$RESPONSE_CODE)
 
+# añadir una columna
+# df$url_lenght <- nchar(df$url)
+
+#usamos el onecode  para las columnas Response_code, Protocol y Type
+df_one_hot <- one_hot(as.data.table(df), sparsifyNAs = TRUE)
+
+#quitar columnas que no son nùmericas
+df_one_hot$IP <- NULL
+df_one_hot$TIME_STAMP <- NULL
+df_one_hot$URL <- NULL
+df_one_hot$error <- NULL
+
+#existen NA en la comuna BYTES
+df_one_hot$BYTES[is.na(df_one_hot$BYTES)] <- 0
+
+#usamos el Kmeans
+resultado <- kmeans(df_one_hot, centers = 2)
+
+#obtenemos los centros
+centroides <- resultado$centers
 ```
 
 # 7.Representad visualmente en gráficos de tipo scatter plot el resultado de vuestros clústering y interpretad el resultado obtenido (describid las características de los distintos grupos) con los 2 valores distintos de k probados en el apartado anterior en función de los valores de las variables y el número de clúster asignado.
@@ -135,9 +154,6 @@ ggplot2::ggplot(data=epa_http)+ geom_histogram(aes(x = TIME_STAMP),binwidth= 500
 ```{r pregunta7}
 
 ```
-
-
-
 
 ```{r cars}
 summary(cars)
@@ -154,6 +170,7 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 # Laboratorio 03 Machine Learning
+
 ```{r Inicio}
 
 ```

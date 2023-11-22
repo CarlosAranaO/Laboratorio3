@@ -32,6 +32,62 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 
 ```
 
+##Análisis de logs de servidor usando R (parte II)
+####################################################
+
+# 1.Descomprimir el fichero comprimido que contiene los registros del servidor, y a partir de los datos extraídos, cargar en data frame los registros con las peticiones servidas. 
+
+```{r pregunta1}
+
+```
+
+####Exploración de Datos
+
+# 2.Identificar el número único de usuarios que han interactuado directamente con el servidor de forma segregada según si los usuarios han tenido algún tipo de error en las distintas peticiones ofrecidas por el servidor
+
+```{r pregunta2}
+
+```
+
+####Análisis de Datos
+
+# 3. Analizar los distintos tipos de peticiones HTTP (GET, POST, PUT, DELETE) gestionadas por el servidor, identificando la frecuencia de cada una de estas.Repetir el análisis, esta vez filtrando previamente aquellas peticiones correspondientes a recursos ofrecidos de tipo imagen.
+
+```{r pregunta3}
+
+```
+
+####Visualización de Resultados
+
+# 4.Generar al menos 2 gráficos distintos que permitan visualizar alguna característica relevante de los datos analizados. Estos deberán representar por lo menos 1 o 2 variables diferentes del data frame. Describid el gráfico e indicad cualquier observación destacable que se pueda apreciar gracias a la representación gráfica.
+
+```{r pregunta4}
+
+```
+
+# 5.Generar un gráfico que permita visualizar el número de peticiones servidas a lo largo del tiempo.
+
+```{r pregunta5}
+
+```
+
+#### Clústering de datos
+
+# 6.Utilizando un algoritmo de aprendizaje no supervisado, realizad un análisis de clústering con k-means para los datos del servidor. 
+
+```{r pregunta6}
+
+```
+
+# 7.Representad visualmente en gráficos de tipo scatter plot el resultado de vuestros clústering y interpretad el resultado obtenido (describid las características de los distintos grupos) con los 2 valores distintos de k probados en el apartado anterior en función de los valores de las variables y el número de clúster asignado.
+
+```{r pregunta7}
+
+```
+
+
+
+
 
 
 

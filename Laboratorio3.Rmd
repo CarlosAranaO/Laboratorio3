@@ -37,7 +37,18 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 
 # 1.Descomprimir el fichero comprimido que contiene los registros del servidor, y a partir de los datos extraídos, cargar en data frame los registros con las peticiones servidas. 
 
-```{r pregunta1}
+```{r Load_Table, message=FALSE, warning=FALSE, include=FALSE}
+epa_http <- read_table("https://raw.githubusercontent.com/CarlosAranaO/Laboratorio3/main/epa-http.csv", col_names = c("IP" ,"TIME_STAMP","TYPE" , "URL" ,"PROTOCOL" ,"RESPONSE_CODE" ,"BYTES"), col_types = cols(BYTES = col_number()));
+
+epa_http <- data.frame(IP=epa_http$IP,
+  TIME_STAMP = epa_http$TIME_STAMP,
+  TYPE = substr(epa_http$TYPE,2,length(epa_http$TYPE)),
+  URL=epa_http$URL,
+  PROTOCOL=substr(epa_http$PROTOCOL,1,8),
+  RESPONSE_CODE=epa_http$RESPONSE_CODE,
+  BYTES=epa_http$BYTES);
+
+epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", tz = "%d:%H:%M:%S")
 
 ```
 

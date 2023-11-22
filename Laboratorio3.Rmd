@@ -11,10 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown 
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE}
 library(readr)
+library(stringr)
+library(tidyr)
+library(dplyr)
+library(knitr)
 ```
 
 ```{r Load_Table, message=FALSE, warning=FALSE, include=FALSE}
@@ -31,6 +35,7 @@ epa_http <- data.frame(IP=epa_http$IP,
 epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", tz = "%d:%H:%M:%S")
 
 ```
+
 
 ##Análisis de logs de servidor usando R (parte II)
 ####################################################
@@ -98,11 +103,15 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 
 
 
+```{r Resp_3, echo=FALSE, results='asis'}
 
+ HTTP_TYPE <- epa_http %>% count(TYPE);
 
+IMG <- filter (epa_http,substr(epa_http$URL, nchar(epa_http$URL)-3, nchar(epa_http$URL))%in% c(".JPG", ".GIF",".jpg",".gif",".PNG",".png",".BMP",".bmp",".RAW",".raw",".PSD",".psd"));
 
+HTTP_TYPE2 <- IMG %>% count(TYPE);
 
+kable(HTTP_TYPE[1:3,], caption="Tipos de Peticiones HTTP");
+kable(HTTP_TYPE2[1:3,], caption="Tipos de Peticiones HTTP para Imagenes")
 
-
-
-
+```

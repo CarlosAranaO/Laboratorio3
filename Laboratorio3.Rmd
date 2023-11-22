@@ -105,7 +105,7 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 
 ```{r Resp_3, echo=FALSE, results='asis'}
 
- HTTP_TYPE <- epa_http %>% count(TYPE);
+HTTP_TYPE <- epa_http %>% count(TYPE);
 
 IMG <- filter (epa_http,substr(epa_http$URL, nchar(epa_http$URL)-3, nchar(epa_http$URL))%in% c(".JPG", ".GIF",".jpg",".gif",".PNG",".png",".BMP",".bmp",".RAW",".raw",".PSD",".psd"));
 

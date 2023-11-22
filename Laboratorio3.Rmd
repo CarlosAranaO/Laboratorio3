@@ -20,6 +20,7 @@ library(tidyr)
 library(dplyr)
 library(knitr)
 library(ggplot2)
+library(mltools)
 ```
 
 ```{r Load_Table, message=FALSE, warning=FALSE, include=FALSE}
@@ -144,33 +145,17 @@ df_one_hot$BYTES[is.na(df_one_hot$BYTES)] <- 0
 
 #usamos el Kmeans
 resultado <- kmeans(df_one_hot, centers = 2)
-
+resultado3 <- kmeans(df_one_hot, centers = 3)
 #obtenemos los centros
 centroides <- resultado$centers
 ```
 
 # 7.Representad visualmente en gráficos de tipo scatter plot el resultado de vuestros clústering y interpretad el resultado obtenido (describid las características de los distintos grupos) con los 2 valores distintos de k probados en el apartado anterior en función de los valores de las variables y el número de clúster asignado.
 
-```{r pregunta7}
+```{r pregunta7, echo=FALSE, message=FALSE, warning=FALSE}
+df$cluster <- as.character(resultado3$cluster)
+
+ggplot2::ggplot() + geom_point(data = df, mapping = aes(x = BYTES ,y = TIME_STAMP, colour = cluster))
 
 ```
 
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-# Laboratorio 03 Machine Learning
-
-```{r Inicio}
-
-```

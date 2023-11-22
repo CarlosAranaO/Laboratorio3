@@ -13,15 +13,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown 
 
-```{r Load_library}
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE}
 library(readr)
-library(rvest)
 ```
 
-```{r Load_library}
-epa_http <- read_table("https://raw.githubusercontent.com/CarlosAranaO/Laboratorio3/main/epa-http.csv", col_names = FALSE, col_types = cols(X7 = col_double()))
+```{r Load_Table, message=FALSE, warning=FALSE, include=FALSE}
+epa_http <- read_table("https://raw.githubusercontent.com/CarlosAranaO/Laboratorio3/main/epa-http.csv", col_names = c("IP" ,"TIME_STAMP","TYPE" , "URL" ,"PROTOCOL" ,"RESPONSE_CODE" ,"BYTES"), col_types = cols(BYTES = col_number()));
+
+epa_http <- data.frame(IP=epa_http$IP,
+  TIME_STAMP = epa_http$TIME_STAMP,
+  TYPE = substr(epa_http$TYPE,2,length(epa_http$TYPE)),
+  URL=epa_http$URL,
+  PROTOCOL=substr(epa_http$PROTOCOL,1,8),
+  RESPONSE_CODE=epa_http$RESPONSE_CODE,
+  BYTES=epa_http$BYTES);
+
+epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", tz = "%d:%H:%M:%S")
 
 ```
+
+
+
+
 
 
 

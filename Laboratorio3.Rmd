@@ -77,6 +77,29 @@ epa_http$TIME_STAMP <- as.POSIXct(epa_http$TIME_STAMP, format="[%d:%H:%M:%S]", t
 # 2.Identificar el número único de usuarios que han interactuado directamente con el servidor de forma segregada según si los usuarios han tenido algún tipo de error en las distintas peticiones ofrecidas por el servidor
 
 ```{r pregunta2}
+# Leer los datos en otra variable
+df <- epa_http
+
+# Crear una variable para identificar si la petición tuvo un error
+df$error <- ifelse(df$RESPONSE_CODE >= 400, TRUE, FALSE)
+
+# Contar el número de usuarios únicos
+usuarios_unicos <- unique(df$IP, incomparables = FALSE)
+
+# Contar el número de usuarios que no tuvieron ningún error
+usuarios_sin_error <- usuarios_unicos[df[usuarios_unicos, "error"] == FALSE]
+
+# Contar el número de usuarios que tuvieron algún error
+usuarios_con_error <- usuarios_unicos[df[usuarios_unicos, "error"] == TRUE]
+
+# Contar el número de usuarios por tipo de error
+tipos_error <- unique(df$RESPONSE_CODE)
+tipos_error <- tipos_error[tipos_error >= 400]
+#creamos el data frame usuarios_por_error
+usuarios_por_error <- data.frame(
+  tipo_error = tipos_error,
+  usuarios = sapply(tipos_error, function(x) sum(df$error == TRUE & df$RESPONSE_CODE == x))
+)
 
 ```
 

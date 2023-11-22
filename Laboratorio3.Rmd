@@ -15,6 +15,14 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 ```{r Load_library}
 library(readr)
+library(rvest)
+```
+
+```{r Load_library}
+epa_http <- read_table("https://raw.githubusercontent.com/CarlosAranaO/Laboratorio3/main/epa-http.csv", col_names = FALSE, col_types = cols(X7 = col_double()))
 
 ```
+
+
+
 
